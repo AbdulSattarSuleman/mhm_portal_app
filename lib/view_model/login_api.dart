@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:mhm_portal/models/Student_list_model.dart';
 import 'package:mhm_portal/models/success_login_response.dart';
 import 'package:mhm_portal/services/shared_preferences.dart';
 import 'package:mhm_portal/utils/api_urls.dart';
@@ -10,7 +11,41 @@ import '../utils/custom_navigator.dart';
 class ApiClient {
   final Dio _dio = Dio();
 
-  Future<Response> login(
+  // Student API List Information Funcationality
+  Future<dynamic> fetchStudentListInfo(BuildContext? context) async {
+    try {
+      String tokenValue = SharedPreferncesServices.getData('token');
+      dynamic response =
+          await Post(APIUrls.studentListApiUrl, {'token': tokenValue});
+      var studentApiResponse = Api_student_list_model.fromJson(response);
+      print(studentApiResponse);
+
+      if (studentApiResponse.statusCode == 0) {
+        if (studentApiResponse.responseObject != null) {
+          var resultObj = studentApiResponse.responseObject;
+          List<StudentList>? singleStudentDetail = resultObj!.studentList;
+          int studentListLength = singleStudentDetail!.length;
+          print(studentListLength);
+
+          print(tokenValue);
+          // SharedPreferncesServices.setData('token', token!);
+
+        } else {
+          print("Failed APi Response");
+          print(studentApiResponse.statusCode);
+          ScaffoldMessenger.of(context!).showSnackBar(
+              SnackBar(content: Text('${studentApiResponse.statusMessage}')));
+        }
+        return response.data;
+      }
+    } on DioError catch (e) {
+      print(e.response!.data);
+      return e.response!.data;
+    }
+  }
+
+// Admin Login Api Functionality
+  Future<Response> AdminLogin(
       String email, String password, BuildContext? context) async {
     // Implement User Login
     try {

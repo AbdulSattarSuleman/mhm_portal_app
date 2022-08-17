@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mhm_portal/models/std_info_model.dart';
+import 'package:mhm_portal/models/std_info_model_hardcoded.dart';
 import 'package:mhm_portal/my_flutter_app_icons.dart';
 import 'package:mhm_portal/presentation/main/student-list/components/std_card_list.dart';
 import 'package:mhm_portal/presentation/main/student-list/components/std_feature_list.dart';

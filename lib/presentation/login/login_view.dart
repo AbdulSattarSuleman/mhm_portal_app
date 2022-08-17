@@ -130,7 +130,7 @@ class _LoginViewState extends State<LoginView> {
                       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                           content: Text("Please Enter Email & Password")));
                     } else {
-                      ApiClient().login(_emailController.text,
+                      ApiClient().AdminLogin(_emailController.text,
                           _passwordController.text, context);
                     }
                   },
